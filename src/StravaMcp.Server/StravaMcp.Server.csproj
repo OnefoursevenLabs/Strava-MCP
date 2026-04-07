@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -7,10 +7,28 @@
     <Nullable>enable</Nullable>
     <RootNamespace>StravaMcp.Server</RootNamespace>
     <AssemblyName>strava-mcp-server</AssemblyName>
+
+    <!-- NuGet package metadata -->
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>strava-mcp-server</ToolCommandName>
+    <PackageId>StravaMcp.Server</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>OnefoursevenLabs</Authors>
+    <Description>A Model Context Protocol (MCP) server for browsing and querying the Strava API. Provides 21 tools for activities, segments, routes, clubs, gear, and more with automatic OAuth2 token refresh.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/OnefoursevenLabs/Strava-MCP</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/OnefoursevenLabs/Strava-MCP</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>mcp;strava;model-context-protocol;dotnet-tool;ai;llm</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="System.Text.Json" Version="10.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../../README.md" Pack="true" PackagePath="/" />
   </ItemGroup>
 
 </Project>
