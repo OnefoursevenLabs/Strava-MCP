@@ -9,7 +9,7 @@ namespace StravaMcp.Server.Strava;
 /// </summary>
 public sealed class StravaClient : IDisposable
 {
-    private const string BaseUrl = "https://api.strava.com/api/v3";
+    private const string BaseUrl = "https://www.strava.com/api/v3";
     private const string TokenUrl = "https://www.strava.com/oauth/token";
 
     private readonly HttpClient _http = new();
