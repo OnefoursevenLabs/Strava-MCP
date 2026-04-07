@@ -12,7 +12,7 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>strava-mcp-server</ToolCommandName>
     <PackageId>StravaMcp.Server</PackageId>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
     <Authors>OnefoursevenLabs</Authors>
     <Description>A Model Context Protocol (MCP) server for browsing and querying the Strava API. Provides 21 tools for activities, segments, routes, clubs, gear, and more with automatic OAuth2 token refresh.</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
