@@ -42,19 +42,23 @@ public sealed class StravaClient : IDisposable
 
         if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
         {
-            // Force token refresh and retry once
+            // Dispose the 401 response before retrying
+            response.Dispose();
             await RefreshTokenAsync();
             using var retry = new HttpRequestMessage(HttpMethod.Get, url);
             retry.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _token.AccessToken);
             response = await _http.SendAsync(retry);
         }
 
-        var body = await response.Content.ReadAsStringAsync();
+        using (response)
+        {
+            var body = await response.Content.ReadAsStringAsync();
 
-        if (!response.IsSuccessStatusCode)
-            throw new StravaApiException((int)response.StatusCode, body);
+            if (!response.IsSuccessStatusCode)
+                throw new StravaApiException((int)response.StatusCode, body);
 
-        return JsonNode.Parse(body);
+            return JsonNode.Parse(body);
+        }
     }
 
     public async Task<JsonNode?> PutAsync(string path, JsonObject? payload = null)
@@ -67,7 +71,7 @@ public sealed class StravaClient : IDisposable
         if (payload is not null)
             request.Content = new StringContent(payload.ToJsonString(), System.Text.Encoding.UTF8, "application/json");
 
-        var response = await _http.SendAsync(request);
+        using var response = await _http.SendAsync(request);
         var body = await response.Content.ReadAsStringAsync();
 
         if (!response.IsSuccessStatusCode)
@@ -93,7 +97,7 @@ public sealed class StravaClient : IDisposable
             if (!_token.IsExpired && !string.IsNullOrEmpty(_token.AccessToken))
                 return;
 
-            var form = new FormUrlEncodedContent(new Dictionary<string, string>
+            using var form = new FormUrlEncodedContent(new Dictionary<string, string>
             {
                 ["client_id"] = _config.ClientId,
                 ["client_secret"] = _config.ClientSecret,
@@ -101,7 +105,7 @@ public sealed class StravaClient : IDisposable
                 ["refresh_token"] = _token.RefreshToken
             });
 
-            var response = await _http.PostAsync(TokenUrl, form);
+            using var response = await _http.PostAsync(TokenUrl, form);
             var body = await response.Content.ReadAsStringAsync();
 
             if (!response.IsSuccessStatusCode)
