@@ -16,7 +16,7 @@ TAG="v${VERSION}"
 
 # Update version in csproj
 CSPROJ="src/StravaMcp.Server/StravaMcp.Server.csproj"
-sed -i "s|<Version>.*</Version>|<Version>${VERSION}</Version>|" "$CSPROJ"
+sed -i.bak "s/<Version>.*<\/Version>/<Version>${VERSION}<\/Version>/" "$CSPROJ" && rm -f "${CSPROJ}.bak"
 
 git add "$CSPROJ"
 git commit -m "Bump version to ${VERSION}"
