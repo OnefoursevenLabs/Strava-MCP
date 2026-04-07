@@ -54,6 +54,8 @@ public sealed class McpServer
                 continue;
 
             var response = await HandleRequestAsync(request);
+            if (request.Id is null)
+                continue;
             if (response is not null)
                 WriteResponse(response);
         }
