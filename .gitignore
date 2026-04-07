@@ -1,0 +1,18 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.dll
+*.exe
+*.pdb
+.vs/
+
+## Strava tokens (contains secrets)
+strava_tokens.json
+
+## IDE
+.idea/
+*.swp
+*~
